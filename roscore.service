@@ -1,0 +1,14 @@
+[Unit]
+Description=roscore setup service
+After=NetworkManager.service time-sync.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=forking
+Restart=always
+RestartSec=1
+User=ubuntu
+ExecStart=/bin/sh -c ". /opt/ros/noetic/setup.sh; export ROS_MASTER_URI=http://192.168.1.77:11311; export ROS_HOSTNAME=192.168.1.77; roscore & while ! echo exit | nc localhost 11311 > /dev/null; do sleep 5; done"
+
+[Install]
+WantedBy=multi-user.target

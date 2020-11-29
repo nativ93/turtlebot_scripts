@@ -1,0 +1,16 @@
+[Unit]
+Description=Turtlebot3 setup service
+Requires=roscore.service
+PartOf=roscore.service
+After=NetworkManager.service time-sync.target roscore.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=ubuntu
+ExecStart=/bin/bash /bin/turtlebot_startup.bash
+
+[Install]
+WantedBy=multi-user.target
